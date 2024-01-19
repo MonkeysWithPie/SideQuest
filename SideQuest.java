@@ -3,19 +3,23 @@ import java.io.*;
 
 public class SideQuest {
 
-   public static String[] playerInv;
+   public static ArrayList<Item> playerInv;
    public static Enemy currentEnemy = new Enemy();
    public static int gameState;
    public static int playerHP, playerMaxHP;
+   public static Scanner inputScanner = new Scanner(System.in);
    
    public static void main(String args[]) {
-      playerInv = new String[5];
+      playerInv = new ArrayList<>();
       load();
       print("\n--------------------------\n       { WELCOME! }\n   Welcome to SideQuest!\n--------------------------\n",true);
       // Enemy testingEn = new Enemy(20, "Test", 0, new String[]{"Healing Potion;1"}); // Spawns a new enemy with 20 hp, the name "Test", 0 armor class and an inventory of 1 Healing potion.
       // testingEn.damage(15);
       // testingEn.startTurn();
       // currentEnemy = testingEn;
+      ArrayList<Item> arr = new ArrayList<>();
+      arr.add(new Item("Healing Potion",1));
+      currentEnemy = new Enemy(30, "Test", 100, arr, "Tester Bot");
       reloadBars(25);
       wait(2500);
       options(gameState,"");
@@ -31,15 +35,16 @@ public class SideQuest {
       saveObj.createNewFile();
       FileWriter writeFile = new FileWriter("SideQuestData.txt");
       writeFile.write("in:");
-      for (int i = 0; i < playerInv.length; i++) {
-         writeFile.write(playerInv[i]+",\n");
+      for (int i = 0; i < playerInv.size(); i++) {
+         if (playerInv.get(i) == null) { writeFile.write("null,\n");}
+         writeFile.write(playerInv.get(i).toDataString()+",\n");
       }
       writeFile.write("inx");
       writeFile.write("\n"+gameState);
       if (currentEnemy != null && currentEnemy.getHP() != 0) { // save enemy data
          writeFile.write("\nen:");
-         for (int i = 0; i < currentEnemy.getInv().length; i++) {
-            writeFile.write(currentEnemy.getInv()[i]+",\n");
+         for (int i = 0; i < currentEnemy.getInv().size(); i++) {
+            writeFile.write(currentEnemy.getInv().get(i).toDataString()+",\n");
          }
          writeFile.write("enx");
          writeFile.write("\nhp="+currentEnemy.getHP()+",mhp="+currentEnemy.getMaxHP()+",ty="+currentEnemy.getType()+",ac="+currentEnemy.getAC()+",nm="+currentEnemy.getName());
@@ -60,17 +65,15 @@ public class SideQuest {
          if (saveObj.createNewFile()) {
             // create a new save if one does not exist
             print("{!} A new save was created because one does not exist.",true);
-            playerInv[0] = "Wooden Broadsword;1";
-            playerInv[1] = "Healing Potion;1";
+            playerInv.add(new Item("Wooden Broadsword;1"));
+            playerInv.add(new Item("Healing Potion;1"));
             gameState = -1;
             save(false);
          } else {
             // make a bunch of vars because yeah
             Scanner readFile = new Scanner(saveObj);
             int loadStatus = 0;
-            int invIndex = 0;
-            int envIndex = 0;
-            String[] enemyInv = new String[10];
+            ArrayList<Item> enemyInv = new ArrayList<>();
             while (readFile.hasNextLine()) {
                String currentSaveData = readFile.nextLine();
                
@@ -86,12 +89,11 @@ public class SideQuest {
                      currentSaveData = currentSaveData.substring(0,currentSaveData.indexOf(","));
                   }
                   if (currentSaveData.indexOf("null") != -1) {
-                     playerInv[invIndex] = null;
+                     playerInv.add(null);
                   } else {
-                     playerInv[invIndex] = currentSaveData;
+                     playerInv.add(new Item(currentSaveData));
                   }
                   }
-                  invIndex++;
                }
                
                if (loadStatus == 1) { // loadStatus of 1 = loading game state
@@ -114,14 +116,13 @@ public class SideQuest {
                      loadStatus = 3;
                      int enInLen = 0;
                      // im not entirely sure what this does but it works!
-                     for (int i = 0; i < enemyInv.length; i++) {
-                        if (enemyInv[i] != null) { enInLen++; }
+                     for (int i = 0; i < enemyInv.size(); i++) {
+                        if (enemyInv.get(i) != null) { enInLen++; }
                      }
                      if (enInLen != 0) { 
-                        String[] newEnemyInv = new String[enInLen];
-                        int nEnInvInd = 0;
-                        for (int i = 0; i < enemyInv.length; i++) {
-                           if (enemyInv[i] != null) { newEnemyInv[nEnInvInd] = enemyInv[i]; nEnInvInd++; }
+                        ArrayList<Item> newEnemyInv = new ArrayList<>();
+                        for (int i = 0; i < enemyInv.size(); i++) {
+                           if (enemyInv.get(i) != null) { newEnemyInv.add(enemyInv.get(i));}
                         }
                      currentEnemy.setInv(newEnemyInv);
                      }
@@ -132,12 +133,11 @@ public class SideQuest {
                      currentSaveData = currentSaveData.substring(0,currentSaveData.indexOf(","));
                   }
                   if (currentSaveData.indexOf("null") != -1) { // handle null properly
-                     enemyInv[envIndex] = null;
+                     enemyInv.add(null);
                   } else {
-                     enemyInv[envIndex] = currentSaveData;
+                     enemyInv.add(new Item(currentSaveData));
                   }
                   }
-                  envIndex++;
                }
                
                if (loadStatus == 3) { // loadStatus of 3 = loading other enemy data (hp, ac, etc.)
@@ -205,10 +205,8 @@ public class SideQuest {
     * @return answer to the question
     */
    public static String ask(String question) {
-      Scanner asker = new Scanner(System.in);
       print(question + " ",false);
-      String res = asker.nextLine().trim();
-      asker.close();
+      String res = inputScanner.nextLine().trim();
       return res;
    }
    
@@ -217,13 +215,11 @@ public class SideQuest {
     * @param itemName name to look through
     * @return the amount of that item (-1 if not found)
     */
-   public static int getItem(String[] list, String itemName) {
-      for (int i = 0; i < list.length; i++) {
-         if (list[i] == null) { continue; }
-         if (list[i].indexOf(itemName) != -1) {
-            String afterSemi = list[i].substring(list[i].indexOf(";")+1);
-            if (Integer.parseInt(afterSemi) == 0) { return -1; }         
-            return Integer.parseInt(afterSemi);
+   public static int getItem(ArrayList<Item> list, String itemName) {
+      for (int i = 0; i < list.size(); i++) {
+         if (list.get(i) == null) { continue; }
+         if (list.get(i).getItem().equals(itemName)) { 
+            return list.get(i).getStack();
          }
       }
       return -1;
@@ -234,17 +230,15 @@ public class SideQuest {
     * @param name name of the item to change
     * @param value count to set item to
     */
-   public static void setItem(String[] list, String name, int value) {
-      int nonNullPos = 0;
-      for (int i = 0; i < list.length; i++) {
-         if (list[i] == null) { continue; }
-         nonNullPos = i;
-         if (list[i].indexOf(name) != -1) {
-            list[i] = name+";"+value;
+   public static void setItem(ArrayList<Item> list, String name, int value) {
+      for (int i = 0; i < list.size(); i++) {
+         if (list.get(i) == null) { continue; }
+         if (list.get(i).getItem().equals(name)) {
+            list.set(i, new Item(name+";"+value));
             return;
          }
       }
-      list[nonNullPos+1] = name+";"+value;
+      list.add(new Item(name+";"+value));
    }
    
    /**
@@ -252,7 +246,7 @@ public class SideQuest {
     * @param name name of the item to change
     * @param toAdd amount to add (also supports negatives)
     */
-   public static void addItem(String[] list, String name, int toAdd) {
+   public static void addItem(ArrayList<Item> list, String name, int toAdd) {
       if (getItem(list,name) != -1) {
          setItem(list,name,(getItem(list,name)+toAdd));
       } else { 
@@ -262,10 +256,9 @@ public class SideQuest {
    
    public static void printInv() {
       print("\n[ Your inventory ]",true);
-      for (int i = 0; i < playerInv.length; i++) {
-         if (playerInv[i] == null) {continue;}
-         int itemStack = Integer.parseInt(playerInv[i].substring(playerInv[i].indexOf(";")+1));
-         print("  > "+playerInv[i].substring(0,playerInv[i].indexOf(";"))+" x"+itemStack,true);
+      for (int i = 0; i < playerInv.size(); i++) {
+         if (playerInv.get(i) == null) {continue;}
+         print("  > "+playerInv.get(i),true);
       }
       print("",true);
    }
@@ -338,7 +331,7 @@ public class SideQuest {
          options(gameState,"");
          return;
       }
-      
+
       else {
          print("Looks like you have an invalid state.",true);
          print("Resuming automatically...",true);

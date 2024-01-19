@@ -1,23 +1,32 @@
+import java.util.ArrayList;
+
 public class Enemy {
    private int maxHP, curHP, armor;
    private String type, name;
-   private String[] inventory;
+   private ArrayList<Item> inventory;
    
    // CONSTRUCTOR METHODS
-   public Enemy(int health, String name, int ac, String[] inv, String nm) {
+   /**
+    * @param health HP to give the enemy
+    * @param name Name of the enemy (not displayed)
+    * @param ac Armor class of the enemy
+    * @param inv Inventory
+    * @param nm Name displayed to the player
+    */
+   public Enemy(int health, String name, int ac, ArrayList<Item> inv, String nm) {
       maxHP = health;
       curHP = health;
       type = name;
       armor = ac;
       inventory = inv;
-      name = nm;
+      this.name = nm;
    }
    public Enemy() {
       maxHP = 0;
       curHP = 0;
       type = "none";
       armor = 0;
-      inventory = new String[0];
+      inventory = new ArrayList<>();
       name = "Air";
    }
 
@@ -29,7 +38,7 @@ public class Enemy {
    public void damage(int dmg) {
       curHP -= dmg;
    }
-   public void setInv(String[] newInv) {
+   public void setInv(ArrayList<Item> newInv) {
       inventory = newInv;
    }
    public void setArmor(int armorC) {
@@ -46,7 +55,7 @@ public class Enemy {
    }
    
    // ACCESSOR METHODS
-   public String[] getInv() {
+   public ArrayList<Item> getInv() {
       return inventory;
    }
    public int getHP() {
