@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Inventory {
+public class Inventory extends ArrayList<Item> {
     private ArrayList<Item> inv;
 
     public Inventory() {
@@ -9,22 +9,6 @@ public class Inventory {
 
     public Inventory(ArrayList<Item> i) {
         inv = i;
-    }
-
-    public Item get(int i) {
-        return inv.get(i);
-    }
-
-    public int size() {
-        return inv.size();
-    }
-
-    public void add(int i, Item a) {
-        inv.add(i, a);
-    }
-
-    public void add(Item a) {
-        inv.add(a);
     }
 
     /**
@@ -71,8 +55,4 @@ public class Inventory {
         }
         inv.add(new Item(name + ";" + value));
     }
-
-    public String toString() {
-        return inv.toString();
-    };
 }

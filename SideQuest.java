@@ -157,6 +157,12 @@ public class SideQuest {
                if (loadStatus == 3) { // loadStatus of 3 = loading other enemy data (hp, ac, etc.)
                   // i couldn't be bothered to make this more efficient
                   currentEnemy.setWithDataString(currentSaveData);
+                  loadStatus = 4;
+                  continue;
+               }
+
+               if (loadStatus == 4) { // loadStatus of 4 = loading player settings
+                  // uhm uhh uhhhhhhhhhhhs
                }
             }
             readFile.close();
