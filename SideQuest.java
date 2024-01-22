@@ -8,6 +8,7 @@ public class SideQuest {
    public static int gameState;
    public static int playerHP, playerMaxHP;
    public static Scanner inputScanner = new Scanner(System.in);
+   public static Settings settings;
 
    public static void main(String args[]) {
       playerInv = new Inventory();
