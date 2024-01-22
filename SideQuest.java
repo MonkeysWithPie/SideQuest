@@ -22,7 +22,8 @@ public class SideQuest {
       // currentEnemy = testingEn;
       Inventory arr = new Inventory();
       arr.add(new Item("Healing Potion", 1));
-      currentEnemy = new Enemy(30, "Test", 100, arr, "Tester Bot");
+      currentEnemy = new Enemy(100, "Test", 100, arr, "Tester Bot");
+      currentEnemy.damage(100);
       reloadBars(25);
       wait(2500);
       options(gameState, "");
@@ -175,16 +176,15 @@ public class SideQuest {
       // oh
    }
 
-   public static void reloadBars(int enmBarSize) { // TODO fix loading with barsize > hp
+   public static void reloadBars(int enmBarSize) {
       clearScreen();
       String space = "";
       String bar = "";
-      for (int i = currentEnemy.getMaxHP(); i >= 0; i -= (currentEnemy.getMaxHP() / enmBarSize)) {
-         if (i <= currentEnemy.getHP()) {
-            bar = bar.concat("=");
-         } else {
-            space = space.concat(" ");
-         }
+      double ded = currentEnemy.getMaxHP()/((double) enmBarSize);
+      double eqReq = 0;
+      for (int i = 0; i < enmBarSize; i++) {
+         if (currentEnemy.getHP() >= eqReq) { bar = bar + "="; } else { space = space + " "; };
+         eqReq += ded;
       }
       print("[" + bar + space + "] " + currentEnemy.getName() + ": " + currentEnemy.getHP() + "/"
             + currentEnemy.getMaxHP(), true);
@@ -205,11 +205,11 @@ public class SideQuest {
     * @param input what to print
     * @param newLn whether to add a newline or not
     */
-   public static void print(String input, boolean newLn) {
+   public static void print(Object input, boolean newLn) {
       if (newLn) {
-         System.out.println(input);
+         System.out.println(input.toString());
       } else {
-         System.out.print(input);
+         System.out.print(input.toString());
       }
    }
 
