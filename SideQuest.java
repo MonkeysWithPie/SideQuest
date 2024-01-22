@@ -60,6 +60,7 @@ public class SideQuest {
          } else {
             writeFile.write("\nnoen");
          }
+         // TODO make settings save and load
          writeFile.close();
          wait(500);
       } catch (IOException e) {
@@ -323,7 +324,7 @@ public class SideQuest {
       }
 
       // State -2 = changing settings
-      else if (state == -2) {
+      else if (state == -2) { // TODO make settings menu
          print("there would be settings here, but I can't be bothered to add them right now", true);
          wait(1000);
          options(gameState, "");

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Inventory extends ArrayList<Item> {
+public class Inventory extends ArrayList<Item> { // TODO fix extends keyword (it doesn't work like that you idiot)
     private ArrayList<Item> inv;
 
     public Inventory() {

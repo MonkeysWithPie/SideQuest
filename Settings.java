@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class Settings extends HashMap<String,Integer> {
+public class Settings extends HashMap<String,Integer> { // TODO fix extends keyword (it doesn't work like that you idiot)
     private HashMap<String,Integer> settings;
 
     public Settings() {
