@@ -325,7 +325,10 @@ public class SideQuest {
 
       // State -2 = changing settings
       else if (state == -2) { // TODO make settings menu
-         print("there would be settings here, but I can't be bothered to add them right now", true);
+         if (settings == null) { print("hey what the hell that's not a settings list?? that's a null",true); wait(2000); options(gameState, ""); return; }
+         for (int i = 0; i < settings.size(); i++) {
+            print(settings.keySet().toArray()[i]+": "+settings.values().toArray()[i], true);
+         }
          wait(1000);
          options(gameState, "");
          return;

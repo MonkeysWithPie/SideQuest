@@ -14,5 +14,4 @@ public class Settings extends HashMap<String,Integer> {
     public Settings(HashMap<String,Integer> s) {
         super(s);
     }
-    
 }

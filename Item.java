@@ -7,11 +7,20 @@ public class Item {
         count = 0;
     }
 
+    /**
+     * Creates an Item from a data string.
+     * @param arg The data string to use. 
+     * Should be formatted {@code itemName;count} (ex. "Air;0")
+     */
     public Item(String arg) {
         item = arg.substring(0, arg.indexOf(";"));
         count = Integer.parseInt(arg.substring(arg.indexOf(";") + 1));
     }
 
+    /**
+     * @param i the item's name
+     * @param c count of the item
+     */
     public Item(String i, int c) {
         item = i;
         count = c;
