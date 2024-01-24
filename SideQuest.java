@@ -12,6 +12,8 @@ public class SideQuest {
 
    public static void main(String args[]) {
       playerInv = new Inventory();
+      settings = new Settings();
+      settings.updateSetting("testing setting", 0);
       load();
       print("\n--------------------------\n       { WELCOME! }\n   Welcome to SideQuest!\n--------------------------\n",
             true);
@@ -326,6 +328,7 @@ public class SideQuest {
       // State -2 = changing settings
       else if (state == -2) { // TODO make settings menu
          if (settings == null) { print("hey what the hell that's not a settings list?? that's a null",true); wait(2000); options(gameState, ""); return; }
+         settings.fixInvalidSettings();
          for (int i = 0; i < settings.size(); i++) {
             print(settings.keySet().toArray()[i]+": "+settings.values().toArray()[i], true);
          }
