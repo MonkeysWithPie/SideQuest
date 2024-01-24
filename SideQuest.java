@@ -159,14 +159,13 @@ public class SideQuest {
                }
 
                if (loadStatus == 3) { // loadStatus of 3 = loading other enemy data (hp, ac, etc.)
-                  // i couldn't be bothered to make this more efficient
                   currentEnemy.setWithDataString(currentSaveData);
                   loadStatus = 4;
                   continue;
                }
 
                if (loadStatus == 4) { // loadStatus of 4 = loading player settings
-                  // uhm uhh uhhhhhhhhhhhs
+                  // uhm uhh uhhhhhhhhhhh this is awkward i havent added this yet
                }
             }
             readFile.close();
@@ -182,12 +181,7 @@ public class SideQuest {
    }
 
    // Some useful functions
-   public static void clearScreen() {
-      // oh
-   }
-
    public static void reloadBars(int enmBarSize) {
-      clearScreen();
       String space = "";
       String bar = "";
       double ded = currentEnemy.getMaxHP() / ((double) enmBarSize);
