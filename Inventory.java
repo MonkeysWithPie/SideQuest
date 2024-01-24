@@ -1,14 +1,12 @@
 import java.util.ArrayList;
 
-public class Inventory extends ArrayList<Item> { // TODO fix extends keyword (it doesn't work like that you idiot)
-    private ArrayList<Item> inv;
-
+public class Inventory extends ArrayList<Item> {
     public Inventory() {
-        inv = new ArrayList<>();
+        super();
     }
 
     public Inventory(ArrayList<Item> i) {
-        inv = i;
+        super(i);
     }
 
     /**
@@ -28,12 +26,12 @@ public class Inventory extends ArrayList<Item> { // TODO fix extends keyword (it
      * @return stack size of that item (-1 if not found)
      */
     public int getItem(String name) {
-        for (int i = 0; i < inv.size(); i++) {
-            if (inv.get(i) == null) {
+        for (int i = 0; i < size(); i++) {
+            if (get(i) == null) {
                 continue;
             }
-            if (inv.get(i).getItem().equals(name)) {
-                return inv.get(i).getStack();
+            if (get(i).getItem().equals(name)) {
+                return get(i).getStack();
             }
         }
         return -1;
@@ -44,15 +42,15 @@ public class Inventory extends ArrayList<Item> { // TODO fix extends keyword (it
      * @param value sets the stack of the item to this
      */
     public void setItem(String name, int value) {
-        for (int i = 0; i < inv.size(); i++) {
-            if (inv.get(i) == null) {
+        for (int i = 0; i < size(); i++) {
+            if (get(i) == null) {
                 continue;
             }
-            if (inv.get(i).getItem().equals(name)) {
-                inv.set(i, new Item(name + ";" + value));
+            if (get(i).getItem().equals(name)) {
+                set(i, new Item(name + ";" + value));
                 return;
             }
         }
-        inv.add(new Item(name + ";" + value));
+        add(new Item(name + ";" + value));
     }
 }
