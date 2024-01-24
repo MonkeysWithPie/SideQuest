@@ -3,16 +3,14 @@ import java.io.*;
 
 public class SideQuest {
 
-   public static Inventory playerInv;
+   public static Inventory playerInv = new Inventory();
    public static Enemy currentEnemy = new Enemy();
    public static int gameState;
    public static int playerHP, playerMaxHP;
    public static Scanner inputScanner = new Scanner(System.in);
-   public static Settings settings;
+   public static Settings settings = new Settings();
 
    public static void main(String args[]) {
-      playerInv = new Inventory();
-      settings = new Settings();
       settings.updateSetting("testing setting", 0);
       load();
       print("\n--------------------------\n       { WELCOME! }\n   Welcome to SideQuest!\n--------------------------\n",
