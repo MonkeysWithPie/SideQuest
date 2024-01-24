@@ -198,7 +198,6 @@ public class SideQuest {
          } else {
             space = space + " ";
          }
-         ;
          eqReq += ded;
       }
       print("[" + bar + space + "] " + currentEnemy.getName() + ": " + currentEnemy.getHP() + "/"
