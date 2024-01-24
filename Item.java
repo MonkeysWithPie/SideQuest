@@ -9,8 +9,9 @@ public class Item {
 
     /**
      * Creates an Item from a data string.
-     * @param arg The data string to use. 
-     * Should be formatted {@code itemName;count} (ex. "Air;0")
+     * 
+     * @param arg The data string to use.
+     *            Should be formatted {@code itemName;count} (ex. "Air;0")
      */
     public Item(String arg) {
         item = arg.substring(0, arg.indexOf(";"));

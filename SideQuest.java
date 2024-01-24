@@ -190,10 +190,15 @@ public class SideQuest {
       clearScreen();
       String space = "";
       String bar = "";
-      double ded = currentEnemy.getMaxHP()/((double) enmBarSize);
+      double ded = currentEnemy.getMaxHP() / ((double) enmBarSize);
       double eqReq = 0;
       for (int i = 0; i < enmBarSize; i++) {
-         if (currentEnemy.getHP() >= eqReq) { bar = bar + "="; } else { space = space + " "; };
+         if (currentEnemy.getHP() >= eqReq) {
+            bar = bar + "=";
+         } else {
+            space = space + " ";
+         }
+         ;
          eqReq += ded;
       }
       print("[" + bar + space + "] " + currentEnemy.getName() + ": " + currentEnemy.getHP() + "/"
@@ -327,10 +332,15 @@ public class SideQuest {
 
       // State -2 = changing settings
       else if (state == -2) { // TODO make settings menu
-         if (settings == null) { print("hey what the hell that's not a settings list?? that's a null",true); wait(2000); options(gameState, ""); return; }
+         if (settings == null) {
+            print("hey what the hell that's not a settings list?? that's a null", true);
+            wait(2000);
+            options(gameState, "");
+            return;
+         }
          settings.fixInvalidSettings();
          for (int i = 0; i < settings.size(); i++) {
-            print(settings.keySet().toArray()[i]+": "+settings.values().toArray()[i], true);
+            print(settings.keySet().toArray()[i] + ": " + settings.values().toArray()[i], true);
          }
          wait(1000);
          options(gameState, "");

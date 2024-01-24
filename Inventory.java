@@ -10,7 +10,9 @@ public class Inventory extends ArrayList<Item> {
     }
 
     /**
-     * Adds an item to the inventory. Adds a new entry if the item is not already owned.
+     * Adds an item to the inventory. Adds a new entry if the item is not already
+     * owned.
+     * 
      * @param name  name of the item to change
      * @param toAdd amount to add (also supports negatives)
      */
@@ -24,6 +26,7 @@ public class Inventory extends ArrayList<Item> {
 
     /**
      * Checks for an item in the inventory and returns the stack size.
+     * 
      * @param itemName name to look for
      * @return stack size of that item (-1 if not found)
      */
@@ -41,6 +44,7 @@ public class Inventory extends ArrayList<Item> {
 
     /**
      * Sets the amount of an item. Adds the item if it doesn't already exist.
+     * 
      * @param name  name of the item to change
      * @param value sets the stack of the item to this
      */
