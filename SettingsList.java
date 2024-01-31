@@ -23,7 +23,7 @@ public class SettingsList extends ArrayList<Setting> {
     }
 
     public Setting get(String name) {
-        for (Setting s : this) {
+        for (Setting s : this) { // TODO i think binary search is faster so add that maybe
             if (s.getName().equals(name)) return s;
         }
         add(new Setting(name, 0));

@@ -31,6 +31,9 @@ public class SideQuest {
       reloadBars(25);
       wait(2500);
       options(gameState, "");
+      // TODO add battles?? that's kinda the point of the game right
+      // TODO player class? stores gold, inv, etc. (unsure if necessary)
+      // TODO add some sort of shop system (probably with its own class)
    }
 
    // Save data stuffs
@@ -328,7 +331,7 @@ public class SideQuest {
       }
 
       // State -2 = changing settings
-      else if (state == -2) { // TODO make settings menu
+      else if (state == -2) { // TODO make settings menu interactable
          if (settings == null) {
             print("hey what the hell that's not a settings list?? that's a null", true);
             wait(2000);
