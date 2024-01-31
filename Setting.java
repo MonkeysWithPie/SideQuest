@@ -37,9 +37,9 @@ public class Setting implements Comparable<Object> {
     public void setCurVal(int c) { curVal = c; verify(); }
 
     public void verify() {
+        if (maxVal == 0) { maxVal = 1; }
         if (curVal > maxVal) { curVal = maxVal; }
         if (curVal < 0) { curVal = 0; }
-        if (maxVal == 1) { isBool = true; }
         for (int i = 0; i < MAX_SETTING_STRINGS.length; i++) {
             if (name.equals(MAX_SETTING_STRINGS[i]) && !(maxVal == MAX_SETTING_VALUES[i])) {
                 maxVal = MAX_SETTING_VALUES[i];
@@ -47,6 +47,7 @@ public class Setting implements Comparable<Object> {
                 return;
             }
         }
+        if (maxVal == 1) { isBool = true; }
     }
 
     public String toString() {
