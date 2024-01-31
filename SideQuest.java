@@ -8,10 +8,13 @@ public class SideQuest {
    public static int gameState;
    public static int playerHP, playerMaxHP;
    public static Scanner inputScanner = new Scanner(System.in);
-   public static Settings settings = new Settings();
+   public static SettingsList settings = new SettingsList();
 
    public static void main(String args[]) {
-      settings.updateSetting("testing setting", 0);
+      settings.add(new Setting("testing setting"));
+      settings.add(new Setting("testing setting 3"));
+      settings.add(new Setting("testing setting 2"));
+      settings.add(new Setting("aaaaaaaaaaa"));
       load();
       print("\n--------------------------\n       { WELCOME! }\n   Welcome to SideQuest!\n--------------------------\n",
             true);
@@ -218,6 +221,9 @@ public class SideQuest {
          System.out.print(input.toString());
       }
    }
+   public static void print(Object input) {
+      System.out.println(input.toString());
+   }
 
    /**
     * @param question what to ask
@@ -329,10 +335,8 @@ public class SideQuest {
             options(gameState, "");
             return;
          }
-         settings.fixInvalidSettings();
-         for (int i = 0; i < settings.size(); i++) {
-            print(settings.keySet().toArray()[i] + ": " + settings.values().toArray()[i], true);
-         }
+         settings.refresh();
+         print(settings);
          wait(1000);
          options(gameState, "");
          return;
