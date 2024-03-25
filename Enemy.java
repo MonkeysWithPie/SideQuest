@@ -21,19 +21,8 @@ public class Enemy {
    }
 
    public Enemy(String dataString) {
-      curHP = (Integer
-            .parseInt(dataString.substring(dataString.indexOf("hp=") + 3, dataString.indexOf(","))));
-      dataString = dataString.substring(dataString.indexOf(",") + 1);
-      maxHP = (Integer
-            .parseInt(dataString.substring(dataString.indexOf("mhp=") + 4, dataString.indexOf(","))));
-      dataString = dataString.substring(dataString.indexOf(",") + 1);
-      name = (dataString.substring(dataString.indexOf("ty=") + 3, dataString.indexOf(",")));
-      dataString = dataString.substring(dataString.indexOf(",") + 1);
-      armor = (Integer
-            .parseInt(dataString.substring(dataString.indexOf("ac=") + 3, dataString.indexOf(","))));
-      dataString = dataString.substring(dataString.indexOf(",") + 1);
-      name = (dataString.substring(dataString.indexOf("nm=") + 3));
-      inventory = new Inventory();
+      this();
+      setWithDataString(dataString);
    }
 
    public Enemy() {
